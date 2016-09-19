@@ -22,8 +22,10 @@ CodePushDoc 管家小旺使用微软热更新文档
 * [总结](#总结)
 * [参考链接](#参考链接)
 
+
 使用说明
 ------
+
 ### CodePush简介
  > CodePush是一个微软开发的云服务器。通过它，开发者可以直接在用户的设备上部署手机应用更新。CodePush相当于一个中心仓库，开发者可以推送当前的更新。（包括JS/HTML/CSS/Image）推送到CodePush，然后应用将会查询是否有更新。
 ------
@@ -33,6 +35,7 @@ CodePushDoc 管家小旺使用微软热更新文档
   安装完毕之后再控制台输入 ```code-push -v ```
   
 ------
+
 ### 在CodePush服务器注册app
   * 创建账号
     创建一个CodePush账号，```code-push register```
@@ -59,6 +62,7 @@ CodePushDoc 管家小旺使用微软热更新文档
    * ```rnpm link react-native-code-push``` 或者 ```react-native link react-native-code-push``` (v0.27或以上)
    
 ### Plugin Installation(Android)
+
  1. 在android文件夹里的settings.gradle里配置如下内容：
 ```Java
 include ':app',':react-native-code-push'
@@ -126,6 +130,7 @@ react-native bundle --platform android --entry-file index.android.js --bundle-ou
    ![](https://github.com/syun0216/codePushDoc/raw/master/img/img3.png)
 
 
+
 以管家小旺为例：
 ```shell
 code-push release "管家小旺" ./bundles 2.0.0 --des "2.0.0 update"
@@ -179,6 +184,7 @@ AppRegistry.registerComponent('abc', () => abc);
 
 优缺点
 ------
+
 ### CodePush之于跨平台应用的优点
    
    ReactNative和Cordova等知名的跨平台开发框架，其着力于缩减开发时间，做到"write once,run everywhere"的思想，且跟原生相比，跨平台应用的代码重用率高。CodePush的诞生，正是因为javascript是脚本语言，不需要编译就可以运行的特点。CodePush让开发跨平台应用的开发者能够摆脱发版的限制，一个月更新20次也不在话下，这是原生所不能够的。CodePush官方提供CodePush命令。
@@ -193,6 +199,7 @@ AppRegistry.registerComponent('abc', () => abc);
 
 其他插件对比
 ------
+
 ### 国外插件
    1. react-native-code-push (star 1623)
       1. 官方提供CodePush Service,服务器端目前没有开源,不能用自己的服务器
@@ -216,6 +223,7 @@ AppRegistry.registerComponent('abc', () => abc);
 
 总结
 ------
+
    1. react-native-pushy 由reactnative.cn维护，服务器在国内，可以配置自己的服务端，但是并没有看到开源的服务端示例代码。
    2. react-native-auto-updater 不是增量更新，也不支持assets更新。不用第三方服务，要配置自己的服务端。
    3. AppHub收费。
@@ -223,6 +231,7 @@ AppRegistry.registerComponent('abc', () => abc);
    
 参考链接
 ------
+
    * https://github.com/Microsoft/code-push
    * https://github.com/Microsoft/react-native-code-push
    * http://blog.csdn.net/fengyuzhengfan/article/details/52003798
