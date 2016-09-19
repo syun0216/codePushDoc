@@ -23,8 +23,7 @@ CodePushDoc 管家小旺使用微软热更新文档
 使用说明
 ------
 ### CodePush简介
-    CodePush是一个云服务，它能让Cordova和React Native的开发者将手机应用的更新直接部署到用户的设备上。
-    它担任类似中间库的角色，开发者可以把更新的（JS、HTML、CSS和图片）发布到这个仓库上，然后哪些Apps就能查询到更新了。
+    CodePush是一个云服务，它能让Cordova和React Native的开发者将手机应用的更新直接部署到用户的设备上。   它担任类似中间库的角色，开发者可以把更新的（JS、HTML、CSS和图片）发布到这个仓库上，然后哪些Apps就能查询到更新了。
     这就让你可以与你的用户群有一个更确定且直接的交互模式，当你定位到Bug或添加小功能时，
     就不需要重新构建二进制文件在AppStore或者安卓应用市场重新发布了.
 ------
@@ -39,13 +38,29 @@ CodePushDoc 管家小旺使用微软热更新文档
     创建一个CodePush账号，```code-push register```
   * 身份认证
     在管理你的账号之前，需要使用GitHub或者微软账号注册和登录， 
-      ```code-push login```
-      ```code-push whoami```
-      ```code-push logout```...
+      1. ```code-push login```  登录
+      * ```code-push access-key ls```  列出登录的token     
+      * ```code-push access-key rm <accessKey>```  删除某个access-key
+      * ```code-push logout```
   * 应用管理
     在你发布更新前，需要用如下命令在CodePush服务上注册一个App：
-      ```code-push app add "你的应用的名称" ```
-  
+      1. ```code-push app add "你的应用的名称" ```  添加一个新的app
+      * ```code-push app rename "旧的名字" "新的名字"```  重命名一个存在的app
+      * ```code-push app rm "你的应用的名字"```   在账号里面移除一个app
+      * ```code-push app ls ```  列出你的账户下的所有app
+      * ```code-push app transfer ``` 把app的所有权转移到另外一个账号上去
+
+### 在app中添加SDK，配置相关代码（以android为例）
+   * 在应用中安装react-native-code-push插件,```npm install --save react-native-code-push```
+   * 安装rnpm，```npm i rnpm```，如果React Native的版本在v0.27或以上的话，rnpm link已经被集成到React Native CLI里面了。
+   * ```rnpm link react-native-code-push``` 或者 ```react-native link react-native-code-push``` (v0.27或以上)
+   * Plugin Installation(Android)
+   ```Java
+   include ':app', ':react-native-code-push'
+   project(':react-native-code-push').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-code-push/android/app')
+   ```
+          
+          
 优缺点
 ------
 
