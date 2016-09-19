@@ -23,9 +23,7 @@ CodePushDoc 管家小旺使用微软热更新文档
 使用说明
 ------
 ### CodePush简介
-    CodePush是一个云服务，它能让Cordova和React Native的开发者将手机应用的更新直接部署到用户的设备上。   它担任类似中间库的角色，开发者可以把更新的（JS、HTML、CSS和图片）发布到这个仓库上，然后哪些Apps就能查询到更新了。
-    这就让你可以与你的用户群有一个更确定且直接的交互模式，当你定位到Bug或添加小功能时，
-    就不需要重新构建二进制文件在AppStore或者安卓应用市场重新发布了.
+ > CodePush是一个微软开发的云服务器。通过它，开发者可以直接在用户的设备上部署手机应用更新。CodePush相当于一个中心仓库，开发者可以推送当前的更新。（包括JS/HTML/CSS/Image）推送到CodePush，然后应用将会查询是否有更新。
 ------
 
 ### 安装CodePush CLI
@@ -49,18 +47,59 @@ CodePushDoc 管家小旺使用微软热更新文档
       * ```code-push app rm "你的应用的名字"```   在账号里面移除一个app
       * ```code-push app ls ```  列出你的账户下的所有app
       * ```code-push app transfer ``` 把app的所有权转移到另外一个账号上去
+    
 
 ### 在app中添加SDK，配置相关代码（以android为例）
    * 在应用中安装react-native-code-push插件,```npm install --save react-native-code-push```
    * 安装rnpm，```npm i rnpm```，如果React Native的版本在v0.27或以上的话，rnpm link已经被集成到React Native CLI里面了。
    * ```rnpm link react-native-code-push``` 或者 ```react-native link react-native-code-push``` (v0.27或以上)
-   * Plugin Installation(Android)
-   ```Java
-   include ':app', ':react-native-code-push'
-   project(':react-native-code-push').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-code-push/android/app')
-   ```
-          
-          
+   
+### Plugin Installation(Android)
+ 1. 在android文件夹里的settings.gradle里配置如下内容：
+```Java
+include ':app',':react-native-code-push'
+project(':react-native-code-push').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-code-push/android/app')
+```
+ 2. 获取**部署密钥**，```code-push deployment ls "管家小旺"
+
+ 3. 如果rnpm link 没有成功配置，可以手动修改android文件夹里面的MainApplication.java
+     
+```Java
+import com.microsoft.codepush.react.CodePush; //加入codepush的包
+
+@Override
+        protected String getJSBundleFile() { 
+            return CodePush.getJSBundleFile();
+        } //获取app打包更新的路径
+        
+@Override
+        protected List<ReactPackage> getPackages() {
+            return Arrays.<ReactPackage>asList(
+                    new MainReactPackage(),
+                    new CodePush("5LIPMY4Po6MdZeyq995xSKlfiV56VJCzo2e3W", getApplicationContext(), BuildConfig.DEBUG),
+                    new RNDeviceInfo(),
+                    new ExtraDimensionsPackage(),
+                    new BarcodeScannerPackage(),
+                    new JPushPackage(),
+                    new UMengAgentPackage()
+            );
+        }   //此处添加new CodePush("5LIPMY4Po6MdZeyq995xSKlfiV56VJCzo2e3W", getApplicationContext(), BuildConfig.DEBUG),
+            
+```
+> 若不知道app的deployment key 可通过命令: code-push deployment ls "管家小旺" -k 获取，默认为Staging
+
+4. 在android/app/build。gradle 中的 android.defaultConfig.versionName属性,将应用版本改为2.0.0（三位数）
+5. 部署管家小旺app
+   * ```code-push deployment add "管家小旺" ``` 部署管家小旺
+   * ```code-push deployment rename "管家小小旺" ``` 重命名
+   * ```code-push deployment rm "管家小旺"``` 删除部署的管家小旺
+   * ```code-push deployment ls "管家小旺"``` 列出管家小旺的部署情况
+   * ```code-push deployment ls "管家小旺" -k``` 查看管家小旺部署的key
+   * ```code-push deployment history "管家小旺" Staging```查看管家小旺历史版本（Staging或Production）
+
+### 
+
+
 优缺点
 ------
 
