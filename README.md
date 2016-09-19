@@ -4,12 +4,12 @@ CodePushDoc 管家小旺使用微软热更新文档
 ##目录
 * [使用说明](#使用说明)
 
-    * [CodePush简介](CodePush简介)
-    * [安装CodePush CLI](安装CodePush CLI)
-    * [在CodePush服务器注册app](在CodePush服务器注册app)
-    * [在app上添加CodePush SDK ,配置升级相关代码](在app上添加CodePush SDK ,配置升级相关代码)
-    * [更新代码，发布一个应用更新到服务器](更新代码，发布一个应用更新到服务器)
-    * [app收到更新进行更新](app收到更新进行更新)
+    * [CodePush简介](#CodePush简介)
+    * [安装CodePush CLI](#安装CodePush CLI)
+    * [在CodePush服务器注册app](@在CodePush服务器注册app)
+    * [在app上添加CodePush SDK ,配置升级相关代码](@在app上添加CodePush SDK ,配置升级相关代码)
+    * [更新代码，发布一个应用更新到服务器](@更新代码，发布一个应用更新到服务器)
+    * [app收到更新进行更新](@app收到更新进行更新)
     * 更多请参考（https://github.com/Microsoft/code-push/blob/master/cli/README-cn.md#%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86）
     
 * [优缺点](#优缺点)
@@ -99,7 +99,7 @@ import com.microsoft.codepush.react.CodePush; //加入codepush的包
    * ```code-push deployment ls "管家小旺" -k```  查看管家小旺部署的key
    * ```code-push deployment history "管家小旺" Staging``` 查看管家小旺历史版本（Staging或Production）
 
-### 发布更新
+### 更新代码，发布一个应用更新到服务器
 
 第一步  在工程根目录创建一个bundles文件夹，
 
@@ -120,12 +120,18 @@ react-native bundle --platform android --entry-file index.android.js --bundle-ou
 **--description** 更新描述
 **--mandatory** 是否强制更新
 
+如图：
+   ![](https://github.com/syun0216/codePushDoc/raw/master/img/img3.png)
+
+
 以管家小旺为例：
 ```shell
 code-push release "管家小旺" ./bundles 2.0.0 --des "2.0.0 update"
 ```
 
-第四步 推送我们的app之后，我们需要在根component中获取推送的更新，具体细节见（https://github.com/Microsoft/react-native-code-push#javascript-api-reference），中的plugin usage
+### app收到更新进行更新
+
+推送我们的app之后，我们需要在根component中获取推送的更新，具体细节见（https://github.com/Microsoft/react-native-code-push#javascript-api-reference），中的plugin usage
 此处提供一个例子，使用**codePush.sync()**获取更新包：
 
 ```javascript
@@ -164,9 +170,23 @@ abc = codePush(codePushOptions)(abc);
 AppRegistry.registerComponent('abc', () => abc);
 ```
 
+#### 效果如图：
+
+   ![](https://github.com/syun0216/codePushDoc/raw/master/img/img2.png)
+
 
 优缺点
 ------
+### CodePush之于跨平台应用的优点
+   
+   ReactNative和Cordova等知名的跨平台开发框架，其着力于缩减开发时间，做到"write once,run everywhere"的思想，且跟原生相比，跨平台应用的代码重用率高。CodePush的诞生，正是因为javascript是脚本语言，不需要编译就可以运行的特点。CodePush让开发跨平台应用的开发者能够摆脱发版的限制，一个月更新20次也不在话下，这是原生所不能够的。
+
+### 缺点
+   * CodePush只能更新js或者图片，不能更新原生代码。
+   * 服务端在美国，国内可能不稳定。
+
+### CodePush适合使用的场景
+   综上，我们可以得出CodePush允许我们更新js、css、image等文件，但是如果修改了原生的android或者ios的代码，CodePush是不支持更新的。所以我们平时新增图片和js页面是可用的。
 
 其他插件对比
 ------
