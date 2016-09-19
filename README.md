@@ -61,17 +61,24 @@ CodePushDoc 管家小旺使用微软热更新文档
    * 安装rnpm，```npm i rnpm```，如果React Native的版本在v0.27或以上的话，rnpm link已经被集成到React Native CLI里面了。
    * ```rnpm link react-native-code-push``` 或者 ```react-native link react-native-code-push``` (v0.27或以上)
    
-### Plugin Installation(Android)
+### Plugin Installation(Android 要在android studio环境下完成)
 
- 1. 在android文件夹里的settings.gradle里配置如下内容：
+  * 在android文件夹里的settings.gradle里配置如下内容：
 ```Java
 include ':app',':react-native-code-push'
 project(':react-native-code-push').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-code-push/android/app')
 ```
- 2. 获取**部署密钥**，```code-push deployment ls "管家小旺"```
 
- 3. 如果rnpm link 没有成功配置，可以手动修改android文件夹里面的MainApplication.java
-     
+  * 在Module：app 的build.gradle里添加以下内容：
+  
+```Java
+ apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+ dependencies {
+    compile project(':react-native-code-push') //添加到依赖里
+}
+ ```
+  * 获取**部署密钥**，```code-push deployment ls "管家小旺"```
+  * 如果rnpm link 没有成功配置，可以手动修改android文件夹里面的MainApplication.java
 ```Java
 import com.microsoft.codepush.react.CodePush; //加入codepush的包
 
@@ -96,14 +103,14 @@ import com.microsoft.codepush.react.CodePush; //加入codepush的包
 ```
 > 若不知道app的deployment key 可通过命令: code-push deployment ls "管家小旺" -k 获取，默认为Staging
 
-4. 在android/app/build。gradle 中的 android.defaultConfig.versionName属性,将应用版本改为2.0.0（三位数）
-5. 部署管家小旺app
-   * ```code-push deployment add "管家小旺" ``` 部署管家小旺
-   * ```code-push deployment rename "管家小小旺" ``` 重命名
-   * ```code-push deployment rm "管家小旺"``` 删除部署的管家小旺
-   * ```code-push deployment ls "管家小旺"``` 列出管家小旺的部署情况
-   * ```code-push deployment ls "管家小旺" -k```  查看管家小旺部署的key
-   * ```code-push deployment history "管家小旺" Staging``` 查看管家小旺历史版本（Staging或Production）
+  * 在android/app/build。gradle 中的 android.defaultConfig.versionName属性,将应用版本改为2.0.0（三位数）
+  * 部署管家小旺app
+      * ```code-push deployment add "管家小旺" ``` 部署管家小旺
+      * ```code-push deployment rename "管家小小旺" ``` 重命名
+      * ```code-push deployment rm "管家小旺"``` 删除部署的管家小旺
+      * ```code-push deployment ls "管家小旺"``` 列出管家小旺的部署情况
+      * ```code-push deployment ls "管家小旺" -k```  查看管家小旺部署的key
+      * ```code-push deployment history "管家小旺" Staging``` 查看管家小旺历史版本（Staging或Production）
 
 ### 更新代码，发布一个应用更新到服务器
 
