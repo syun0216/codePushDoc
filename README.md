@@ -40,6 +40,7 @@ CodePushDoc 管家小旺使用微软热更新文档
       * ```code-push access-key ls```  列出登录的token     
       * ```code-push access-key rm <accessKey>```  删除某个access-key
       * ```code-push logout```
+      
   * 应用管理
     在你发布更新前，需要用如下命令在CodePush服务上注册一个App：
       1. ```code-push app add "你的应用的名称" ```  添加一个新的app
@@ -50,6 +51,7 @@ CodePushDoc 管家小旺使用微软热更新文档
     
 
 ### 在app中添加SDK，配置相关代码（以android为例）
+
    * 在应用中安装react-native-code-push插件,```npm install --save react-native-code-push```
    * 安装rnpm，```npm i rnpm```，如果React Native的版本在v0.27或以上的话，rnpm link已经被集成到React Native CLI里面了。
    * ```rnpm link react-native-code-push``` 或者 ```react-native link react-native-code-push``` (v0.27或以上)
@@ -94,10 +96,73 @@ import com.microsoft.codepush.react.CodePush; //加入codepush的包
    * ```code-push deployment rename "管家小小旺" ``` 重命名
    * ```code-push deployment rm "管家小旺"``` 删除部署的管家小旺
    * ```code-push deployment ls "管家小旺"``` 列出管家小旺的部署情况
-   * ```code-push deployment ls "管家小旺" -k``` 查看管家小旺部署的key
-   * ```code-push deployment history "管家小旺" Staging```查看管家小旺历史版本（Staging或Production）
+   * ```code-push deployment ls "管家小旺" -k```  查看管家小旺部署的key
+   * ```code-push deployment history "管家小旺" Staging``` 查看管家小旺历史版本（Staging或Production）
 
-### 
+### 发布更新
+
+第一步  在工程根目录创建一个bundles文件夹，
+
+第二步  运用命令行打包
+```shell
+react-native bundle --platform <平台> --entry-file <启动文件> --bundle-output <打包js输出文件> --assets-dest <资源输出目录> --dev <是否调试>
+```
+以管家小旺(安卓版)为例：
+```shell
+react-native bundle --platform android --entry-file index.android.js --bundle-output ./bundles/index.android.bundle --dev false
+```
+> 注意：输出后会覆盖原来的bundle文件，输出后的bundle文件名就叫index.android.bundle，此处的平台可以选择ios或者android
+
+第三步  打包bundle结束后，就可以通过CodePush发布更新了。输入以下命令：
+```code-push release <应用名称> <bundles所在目录> <对应的应用版本>```
+
+**--deploymentName** 更新环境
+**--description** 更新描述
+**--mandatory** 是否强制更新
+
+以管家小旺为例：
+```shell
+code-push release "管家小旺" ./bundles 2.0.0 --des "2.0.0 update"
+```
+
+第四步 推送我们的app之后，我们需要在根component中获取推送的更新，具体细节见（https://github.com/Microsoft/react-native-code-push#javascript-api-reference），中的plugin usage
+此处提供一个例子，使用**codePush.sync()**获取更新包：
+
+```javascript
+import React, { Component } from 'react';
+
+import {
+    AppRegistry,
+} from 'react-native'
+import SplashScreenView from './common/view/SplashScreenView'
+import codePush from 'react-native-code-push';
+
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
+
+class abc extends Component {
+  componentDidMount() {
+    codePush.sync({
+      updateDialog: {
+        title:"有更新啦！",
+        optionalUpdateMessage:"获取到更新，你想现在安装吗？",
+        optionalInstallButtonLabel:"好的",
+        optionalIgnoreButtonLabel:"取消"
+      },
+      installMode: codePush.InstallMode.IMMEDIATE
+    });
+  }
+
+
+  render() {
+    return (
+     <SplashScreenView/>
+    );
+  }
+}
+abc = codePush(codePushOptions)(abc);
+
+AppRegistry.registerComponent('abc', () => abc);
+```
 
 
 优缺点
