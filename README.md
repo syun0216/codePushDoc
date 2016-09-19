@@ -68,7 +68,7 @@ CodePushDoc 管家小旺使用微软热更新文档
 include ':app',':react-native-code-push'
 project(':react-native-code-push').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-code-push/android/app')
 ```
- 2. 获取**部署密钥**，```code-push deployment ls "管家小旺"
+ 2. 获取**部署密钥**，```code-push deployment ls "管家小旺"```
 
  3. 如果rnpm link 没有成功配置，可以手动修改android文件夹里面的MainApplication.java
      
