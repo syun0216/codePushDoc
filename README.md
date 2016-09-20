@@ -154,21 +154,28 @@ import React, { Component } from 'react';
 import {
     AppRegistry,
 } from 'react-native'
-import SplashScreenView from './common/view/SplashScreenView'
+import SplashScreenView from './common/view/SplashScreenView';
+import DeviceInfo from "react-native-device-info";
 import codePush from 'react-native-code-push';
 
 let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
 class abc extends Component {
-  componentDidMount() {
-    codePush.sync({
-      updateDialog: {
-        title:"有更新啦！",
-        optionalUpdateMessage:"获取到更新，你想现在安装吗？",
-        optionalInstallButtonLabel:"好的",
-        optionalIgnoreButtonLabel:"取消"
-      },
-      installMode: codePush.InstallMode.IMMEDIATE
+
+ componentDidMount() {
+    codePush.getCurrentPackage().then((info) => {
+      if(info.appVersion == DeviceInfo.getVersion()){
+        codePush.sync({
+              updateDialog: {
+                title:"有更新啦！",
+                optionalUpdateMessage:"获取到更新，你想现在安装吗？",
+                optionalInstallButtonLabel:"好的",
+                optionalIgnoreButtonLabel:"取消"
+              },
+              installMode: codePush.InstallMode.IMMEDIATE
+            }
+        );
+      }
     });
   }
 
