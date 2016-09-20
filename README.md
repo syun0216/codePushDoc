@@ -1,4 +1,4 @@
-CodePushDoc 管家小旺使用微软热更新文档
+CodePushDoc 使用微软热更新文档
 ===========================
 
 ##目录
@@ -77,7 +77,7 @@ project(':react-native-code-push').projectDir = new File(rootProject.projectDir,
     compile project(':react-native-code-push') //添加到依赖里
 }
  ```
-  * 获取**部署密钥**，```code-push deployment ls "管家小旺"```
+  * 获取**部署密钥**，```code-push deployment ls <your app name>```
   * 如果rnpm link 没有成功配置，可以手动修改android文件夹里面的MainApplication.java
 ```Java
 import com.microsoft.codepush.react.CodePush; //加入codepush的包
@@ -105,12 +105,12 @@ import com.microsoft.codepush.react.CodePush; //加入codepush的包
 
   * 在android/app/build。gradle 中的 android.defaultConfig.versionName属性,将应用版本改为2.0.0（三位数）
   * 部署管家小旺app
-      * ```code-push deployment add "管家小旺" ``` 部署管家小旺
-      * ```code-push deployment rename "管家小小旺" ``` 重命名
-      * ```code-push deployment rm "管家小旺"``` 删除部署的管家小旺
-      * ```code-push deployment ls "管家小旺"``` 列出管家小旺的部署情况
-      * ```code-push deployment ls "管家小旺" -k```  查看管家小旺部署的key
-      * ```code-push deployment history "管家小旺" Staging``` 查看管家小旺历史版本（Staging或Production）
+      * ```code-push deployment add <your app name> ``` 部署your app
+      * ```code-push deployment rename <new app name> ``` 重命名
+      * ```code-push deployment rm <your app name>``` 删除部署的your app
+      * ```code-push deployment ls <your app name>``` 列出your app的部署情况
+      * ```code-push deployment ls <your app name> -k```  查看your app部署的key
+      * ```code-push deployment history <your app name> Staging``` 查看your app历史版本（Staging或Production）
 
 ### 更新代码，发布一个应用更新到服务器
 
@@ -120,7 +120,7 @@ import com.microsoft.codepush.react.CodePush; //加入codepush的包
 ```shell
 react-native bundle --platform <平台> --entry-file <启动文件> --bundle-output <打包js输出文件> --assets-dest <资源输出目录> --dev <是否调试>
 ```
-以管家小旺(安卓版)为例：
+以(安卓版)为例：
 ```shell
 react-native bundle --platform android --entry-file index.android.js --bundle-output ./bundles/index.android.bundle --dev false
 ```
@@ -140,7 +140,7 @@ react-native bundle --platform android --entry-file index.android.js --bundle-ou
 
 以管家小旺为例：
 ```shell
-code-push release "管家小旺" ./bundles 2.0.0 --des "2.0.0 update"
+code-push release <your app name> ./bundles 2.0.0 --des "2.0.0 update"
 ```
 
 ### app收到更新进行更新
