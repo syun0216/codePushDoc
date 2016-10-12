@@ -101,10 +101,10 @@ import com.microsoft.codepush.react.CodePush; //加入codepush的包
         }   //此处添加new CodePush("5LIPMY4Po6MdZeyq995xSKlfiV56VJCzo2e3W", getApplicationContext(), BuildConfig.DEBUG),
             
 ```
-> 若不知道app的deployment key 可通过命令: code-push deployment ls "管家小旺" -k 获取，默认为Staging
+> 若不知道app的deployment key 可通过命令: code-push deployment ls <myapp> -k 获取，默认为Staging
 
   * 在android/app/build。gradle 中的 android.defaultConfig.versionName属性,将应用版本改为2.0.0（三位数）
-  * 部署管家小旺app
+  * 部署myapp
       * ```code-push deployment add <your app name> ``` 部署your app
       * ```code-push deployment rename <new app name> ``` 重命名
       * ```code-push deployment rm <your app name>``` 删除部署的your app
