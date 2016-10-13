@@ -91,7 +91,7 @@ import com.microsoft.codepush.react.CodePush; //加入codepush的包
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-                    new CodePush("5LIPMY4Po6MdZeyq995xSKlfiV56VJCzo2e3W", getApplicationContext(), BuildConfig.DEBUG),
+                    new CodePush("5LIPMY4Po6Md******************", getApplicationContext(), BuildConfig.DEBUG),
                     new RNDeviceInfo(),
                     new ExtraDimensionsPackage(),
                     new BarcodeScannerPackage(),
